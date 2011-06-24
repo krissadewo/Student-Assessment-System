@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+
+    <desktop-config>
+<!--        <theme-provider-class>com.os.hris.zk.CacheableThemeProvider</theme-provider-class>-->
+    </desktop-config>
+    <session-config>
+        <session-timeout>500</session-timeout>
+        <timer-keep-alive>false</timer-keep-alive>
+        <max-desktops-per-session>15</max-desktops-per-session>
+        <max-requests-per-session>5</max-requests-per-session>
+    </session-config>
+
+	<!-- An empty URL can cause the browser to reload the same URL -->
+    <device-config>
+        <device-type>ajax</device-type>
+        <timeout-uri>/timeout.zul</timeout-uri>
+    </device-config>
+
+    <client-config>
+        <debug-js>false</debug-js>
+        <disable-behind-modal>false</disable-behind-modal>
+        <error-reload>
+            <device-type>ajax</device-type>
+            <error-code>301</error-code>
+            <reload-uri></reload-uri>
+        </error-reload>
+        <keep-across-visits>true</keep-across-visits>
+        <processing-prompt-delay>900</processing-prompt-delay>
+        <tooltip-delay>800</tooltip-delay>
+        <resend-delay>9000</resend-delay>
+        <click-filter-delay>1</click-filter-delay>
+    </client-config>
+
+    <system-config>
+        <max-spare-threads>100</max-spare-threads>
+        <max-suspended-threads>100</max-suspended-threads>
+        <max-upload-size>1</max-upload-size>
+        <max-process-time>3000</max-process-time>
+        <disable-event-thread>false</disable-event-thread>
+    </system-config>
+    
+    <library-property>
+        <name>org.zkoss.theme.preferred</name>
+        <value>silvertail</value>
+    </library-property>
+    
+    <library-property>
+        <name>org.zkoss.zul.Button.mold</name>
+        <value>trendy</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.Textbox.mold</name>
+        <value>rounded</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.Intbox.mold</name>
+        <value>rounded</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.Bandbox.mold</name>
+        <value>rounded</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.Combobox.mold</name>
+        <value>rounded</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.Datebox.mold</name>
+        <value>rounded</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.progressbox.position</name>
+        <value>center</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.Textbox.width</name>
+        <value>500px</value>
+    </library-property>
+
+	<!-- Configure the font family for titles in ZUL CSS file (~./zul/css/zk.wcs) 
+		Default: arial, sans-serif. -->
+    <library-property>
+        <name>org.zkoss.zul.theme.fontFamilyT</name>
+        <value>arial, sans-serif</value>
+    </library-property>
+
+	<!-- Configure the font family for content in ZUL CSS file (~./zul/css/zk.wcs) 
+		Default: arial, sans-serif. -->
+    <library-property>
+        <name>org.zkoss.zul.theme.fontFamilyC</name>
+        <value>arial, sans-serif</value>
+    </library-property>
+
+</zk>

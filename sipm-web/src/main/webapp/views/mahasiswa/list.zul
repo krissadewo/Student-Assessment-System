@@ -1,0 +1,28 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div apply="com.os.sipm.controller.mahasiswa.ListController" action="show: slideIn({duration: 400})"  >
+        <panel id="panelTitleMahasiswa" title="${c:l('panelTitleMahasiswa')}" >
+            <caption>
+                <toolbar align="end">
+                    <toolbarbutton id="btnAdd" image="img/add.ico" tooltiptext="${c:l('btnAdd')}"/>
+                    <toolbarbutton id="btnDelete" image="img/delete.ico" tooltiptext="${c:l('btnDelete')}"/>
+                    <toolbarbutton id="btnEdit" image="img/edit.ico" tooltiptext="${c:l('btnEdit')}"/>
+                    <toolbarbutton id="btnSearch" image="img/search.ico" tooltiptext="${c:l('btnSearch')}"/>
+                    <toolbarbutton id="btnRefresh" image="img/refresh.ico" tooltiptext="${c:l('btnRefresh')}"/>
+                </toolbar>
+            </caption>
+            <panelchildren style="border-bottom:none;">      
+                <paging id="paging" pageSize="2"  autohide="true" detailed="true"/>        
+                <listbox id="listboxData" style="border-bottom:none;border-top:none;" >
+                    <listhead sizable="true" >
+                        <listheader id="listheaderNo" label="${c:l('listheaderNo')}" width="40px" align="right"/>
+                        <listheader id="listheaderNim"  label="${c:l('listheaderNim')}" width="200px" sort="auto"  />
+                        <listheader id="listheaderNama" label="${c:l('listheaderNama')}"  sort="auto" />
+                        <listheader id="listheaderJurusan" label="${c:l('listheaderJurusan')}" width="200px" sort="auto"/>                                             
+                    </listhead>
+                </listbox>              
+            </panelchildren>
+        </panel>
+    </div>
+</zk>

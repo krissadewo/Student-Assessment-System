@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.os.sipm.model.mahasiswa.MahasiswaDao" >
+     
+    <cache 
+        type="org.mybatis.caches.oscache.OSCache"
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"
+     />
+     
+    <resultMap id="results" type="Mahasiswa">
+        <result property="id" column="id_mahasiswa" />
+        <result property="nim" column="nim"/>
+        <result property="nama" column="nama_mahasiswa"/>
+        <result property="jurusan.id" column="id_jurusan"/>
+        <result property="jurusan.kode" column="kode_jurusan"/>
+        <result property="jurusan.nama" column="nama_jurusan"/>       
+    </resultMap>
+       
+    <insert id="saveMahasiswa" flushCache="true">
+        INSERT INTO mahasiswa(
+        nim, 
+        nama_mahasiswa, 
+        id_jurusan)
+        VALUES(
+        #{nim}, 
+        #{nama}, 
+        #{jurusan.id})
+    </insert>
+    
+    <update id="updateMahasiswa" flushCache="true">
+        UPDATE mahasiswa SET 
+        nim = #{nim},
+        nama_mahasiswa = #{nama},
+        id_jurusan = #{jurusan.id}      
+        WHERE id_mahasiswa = #{id}
+    </update>  
+           
+    <delete id="deleteMahasiswa" flushCache="true">
+        DELETE FROM mahasiswa WHERE id_mahasiswa = #{id}
+    </delete>
+     
+    <select id="getAllMahasiswa"  resultMap="results" useCache="true">
+        SELECT *FROM mahasiswa m
+        INNER JOIN jurusan j ON j.id_jurusan = m.id_jurusan
+        LIMIT #{limit} OFFSET #{cursor}
+    </select>
+    
+    <select id="getMahasiswaByNim"  resultMap="results" useCache="true">
+         SELECT *FROM mahasiswa m
+         INNER JOIN jurusan j ON j.id_jurusan = m.id_jurusan
+         WHERE nim LIKE #{nim}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getMahasiswaByNama" resultMap="results" useCache="true">
+         SELECT *FROM mahasiswa m
+         INNER JOIN jurusan j ON j.id_jurusan = m.id_jurusan
+         WHERE nama_mahasiswa LIKE #{nama}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getMahasiswaById" resultMap="results" useCache="true">
+        SELECT *FROM mahasiswa m
+        INNER JOIN jurusan j ON j.id_jurusan = m.id_jurusan
+        WHERE id_mahasiswa = #{id}       
+    </select> 
+    
+    <select id="countAllMahasiswa" resultType="int" useCache="true">
+        SELECT COUNT(id_mahasiswa) FROM mahasiswa           
+    </select>
+    
+    <select id="countAllMahasiswaByNim" resultType="int" useCache="true">
+        SELECT COUNT(id_mahasiswa) FROM mahasiswa           
+        WHERE nim LIKE #{nim}
+    </select>
+    
+    <select id="countAllMahasiswaByNama" resultType="int" useCache="true">
+        SELECT COUNT(id_mahasiswa) FROM mahasiswa           
+        WHERE nama_mahasiswa LIKE #{nama}
+    </select>
+ 
+</mapper>

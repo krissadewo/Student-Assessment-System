@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pribadi_pegawai_grafik" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="244"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(a.agama_id) as jumlah, a.nama_agama FROM hris.pegawai pp
+INNER JOIN hris.agama a ON a.agama_id = pp.agama_id
+GROUP BY a.nama_agama]]>
+	</queryString>
+	<field name="jumlah" class="java.lang.Long"/>
+	<field name="nama_agama" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86">
+			<frame>
+				<reportElement mode="Opaque" x="-10" y="-10" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="0" y="0" width="595" height="92" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="30" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Laporan Pribadi Pegawai]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="512" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="0" width="572" height="294"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nama_agama}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nama_agama}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{jumlah}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+					<rangeAxisMinValueExpression><![CDATA[new Integer(0)]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[new Integer(10)]]></rangeAxisMaxValueExpression>
+				</bar3DPlot>
+			</bar3DChart>
+			<pie3DChart>
+				<chart>
+					<reportElement x="0" y="294" width="302" height="198"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{nama_agama}]]></keyExpression>
+					<valueExpression><![CDATA[$F{jumlah}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot orientation="Horizontal"/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+				</pie3DPlot>
+			</pie3DChart>
+			<lineChart>
+				<chart>
+					<reportElement x="302" y="294" width="270" height="198"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Dummy Series"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nama_agama}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{jumlah}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+					<rangeAxisMinValueExpression><![CDATA[new Integer(0)]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[new Integer(5)]]></rangeAxisMaxValueExpression>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

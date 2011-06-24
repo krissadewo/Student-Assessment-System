@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.os.sipm.model.menu.MenuDao">
+    
+    <cache 
+        type="org.mybatis.caches.oscache.OSCache"
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"
+     />
+    
+    <resultMap id="results" type="Menu">
+        <result property="id" column="menu_id" />
+        <result property="menuName" column="menu_name"/>
+        <result property="imagePath" column="image_path"/>
+    </resultMap>   
+    
+    <select id="getAllMenu" resultMap="results" useCache="true">
+           SELECT *FROM menu ORDER BY sequance
+    </select>  
+ 
+</mapper>

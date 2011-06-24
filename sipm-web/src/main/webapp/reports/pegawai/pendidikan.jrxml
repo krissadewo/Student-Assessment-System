@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pegawai_pendidikan_subreport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NIP" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{NIP}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *FROM hris.pendidikan_pegawai pp
+INNER JOIN hris.pegawai p ON p.pegawai_id = pp.pegawai_id
+INNER JOIN hris.jenjang_pendidikan jp ON jp.jenjang_pendidikan_id = pp.jenjang_pendidikan_id WHERE p.nip=$P{NIP}]]>
+	</queryString>
+	<field name="pendidikan_pegawai_id" class="java.lang.Integer"/>
+	<field name="nama_lembaga" class="java.lang.String"/>
+	<field name="tahun_masuk" class="java.lang.String"/>
+	<field name="tahun_keluar" class="java.lang.String"/>
+	<field name="jenjang_pendidikan_id" class="java.lang.Integer"/>
+	<field name="pegawai_id" class="java.lang.Integer"/>
+	<field name="nip" class="java.lang.String"/>
+	<field name="nama" class="java.lang.String"/>
+	<field name="alamat" class="java.lang.String"/>
+	<field name="jenis_kelamin" class="java.lang.String"/>
+	<field name="tempat_lahir" class="java.lang.String"/>
+	<field name="tanggal_lahir" class="java.sql.Date"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="foto" class="java.lang.Object"/>
+	<field name="agama_id" class="java.lang.Integer"/>
+	<field name="jenjang" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="60">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="595" height="55" backcolor="#006699"/>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="580" height="55" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Pendidikan Pegawai]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement mode="Opaque" x="259" y="0" width="111" height="15" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tahun Masuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="111" height="15" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tahun Keluar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="481" y="0" width="114" height="15" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jenjang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="13" y="0" width="246" height="15" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nama Lembaga]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="13" y="0" width="246" height="20" forecolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_lembaga}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="259" y="0" width="111" height="20" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tahun_masuk}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="370" y="0" width="111" height="20" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tahun_keluar}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="481" y="0" width="111" height="20" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{jenjang}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="34">
+			<textField>
+				<reportElement mode="Opaque" x="1" y="10" width="511" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="512" y="10" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

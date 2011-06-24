@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window title="PDF Preview" border="normal" width="700px" height="500px"
+            closable="true"
+            id="pdfPreview"
+            apply="com.os.hris.controller.general.ViewerController">
+        <div style="padding:5px">
+            <jasperreport id="report"/>            
+        </div>
+    </window>
+</zk>

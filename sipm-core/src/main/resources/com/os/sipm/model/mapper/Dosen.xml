@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.os.sipm.model.dosen.DosenDao" >
+     
+    <cache 
+        type="org.mybatis.caches.oscache.OSCache"
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"
+     />
+     
+    <resultMap id="results" type="Dosen">
+        <result property="id" column="id_dosen" />
+        <result property="nip" column="nip"/>
+        <result property="nama" column="nama_dosen"/>           
+    </resultMap>
+       
+    <insert id="saveDosen" flushCache="true">
+        INSERT INTO dosen(
+        nip, 
+        nama_dosen)        
+        VALUES(
+        #{nip}, 
+        #{nama})
+    </insert>
+    
+    <update id="updateDosen" flushCache="true">
+        UPDATE dosen SET 
+        nip = #{nip},
+        nama_dosen = #{nama}        
+        WHERE id_dosen = #{id}
+    </update>  
+           
+    <delete id="deleteDosen" flushCache="true">
+        DELETE FROM dosen WHERE id_dosen = #{id}
+    </delete>
+     
+    <select id="getAllDosen"  resultMap="results" useCache="true">
+        SELECT *FROM dosen d      
+        LIMIT #{limit} OFFSET #{cursor}
+    </select>
+    
+    <select id="getDosenByNip"  resultMap="results" useCache="true">
+         SELECT *FROM dosen d        
+         WHERE nip LIKE #{nip}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getDosenByNama" resultMap="results" useCache="true">
+         SELECT *FROM dosen d       
+         WHERE nama_dosen LIKE #{nama}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getDosenById" resultMap="results" useCache="true">
+        SELECT *FROM dosen d        
+        WHERE id_dosen = #{id}       
+    </select> 
+    
+    <select id="countAllDosen" resultType="int" useCache="true">
+        SELECT COUNT(id_dosen) FROM dosen           
+    </select>
+    
+    <select id="countAllDosenByNip" resultType="int" useCache="true">
+        SELECT COUNT(id_dosen) FROM dosen           
+        WHERE nim LIKE #{nim}
+    </select>
+    
+    <select id="countAllDosenByNama" resultType="int" useCache="true">
+        SELECT COUNT(id_dosen) FROM dosen           
+        WHERE nama_dosen LIKE #{nama}
+    </select>
+ 
+</mapper>

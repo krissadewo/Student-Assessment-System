@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/layout.css.dsp"?>
+<?script type="text/javascript" src="/css/zksandbox.js.dsp?v=${desktop.webApp.build}"?>
+<?component name="category" extends="button" widgetClass="os.Category" mold="default"?>
+<?component name="categorybar" extends="div" widgetClass="os.Categorybar"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+    <window apply="com.os.sipm.controller.general.IndexController"  id="window"	border="none" width="100%" height="100%">
+        <borderlayout apply="">
+            <north id="northContent" border="none" size="100px" sclass="os-header" collapsible="true">		
+                <div>
+                    <div sclass="os-logo pointer">
+                        <vlayout>
+                            <label sclass="os-category-text">
+					Smart Human Resource System
+                            </label>
+                            <label sclass="os-category-text">
+					For Smart Company And People
+                            </label>
+                        </vlayout>
+                    </div>
+                    <categorybar zclass="os-categorybar" id="divMainMenu">
+                        <category zclass="os-category"
+ 					forEach="${window$IndexController.menus}" id="${each.menuName}"
+ 						image="${each.imagePath}" label="${c:l('${each.menuName}')}" />
+                    </categorybar>
+                </div>
+            </north>
+            <west id="westContent" title="" size="250px" flex="true" splittable="true"
+		minsize="210" maxsize="500" collapsible="true">
+                <div id = "divMenuItem">
+		
+                </div>
+            </west>
+            <center autoscroll="true" flex="true">
+                <div style="padding:3px;" id="content" />
+            </center>
+        </borderlayout>
+    </window>
+</zk>

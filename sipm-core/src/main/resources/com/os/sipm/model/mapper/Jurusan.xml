@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.os.sipm.model.jurusan.JurusanDao" >
+     
+    <cache 
+        type="org.mybatis.caches.oscache.OSCache"
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"
+     />
+     
+    <resultMap id="results" type="Jurusan">
+        <result property="id" column="id_jurusan" />
+        <result property="kode" column="kode_jurusan"/>
+        <result property="nama" column="nama_jurusan"/>     
+    </resultMap>
+       
+    <insert id="saveJurusan" flushCache="true">
+        INSERT INTO jurusan(
+        kode, 
+        nama)        
+        VALUES(
+        #{kode}, 
+        #{nama})
+    </insert>
+    
+    <update id="updateJurusan" flushCache="true">
+        UPDATE jurusan SET 
+        kode_jurusan = #{kode},
+        nama_jurusan = #{nama},
+        WHERE id_jurusan = #{id}
+    </update>  
+           
+    <delete id="deleteJurusan" flushCache="true">
+        DELETE FROM jurusan WHERE id_jurusan = #{id}
+    </delete>
+     
+    <select id="getAllJurusan"  resultMap="results" useCache="true">
+        SELECT *FROM jurusan      
+    </select>
+    
+</mapper>

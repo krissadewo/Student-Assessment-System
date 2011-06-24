@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk  xmlns="http://www.zkoss.org/2005/zul">
+    <window id="windowPribadiPegawaiSearch" title="Pencarian Data Mahasiswa" border="normal" 
+	closable="true" apply="com.os.sipm.controller.mahasiswa.SearchController"
+        action="show: slideIn({duration: 400})">
+        <hlayout>
+            <grid width="600px">
+                <columns>
+                    <column width="30%" align="right" ></column>
+                    <column align="left" label="Pencarian"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Pilih detail pencarian"/>
+                        <vlayout>
+                            <checkbox id="chkboxNim" label="Berdasarkan NIM" />
+                            <textbox id="txtboxNimCari" visible="false"
+                                action="show: slideDown({duration: 400}); hide:slideUp({duration: 400})"/>
+                            <checkbox id="chkboxNama" label="Berdasarkan Nama" />
+                            <textbox id="txtboxNamaCari" visible="false"/>                                                    
+                        </vlayout>
+                    </row>
+                    <row>
+                        <label value="" />
+                        <hlayout>
+                            <toolbar align="center" mold="panel">
+                                <button id="btnCari" label="" width="30px" image="/img/search-by.png" tooltiptext="Cari"/>                                
+                            </toolbar>
+                        </hlayout>
+                    </row>
+                </rows>
+            </grid>
+        </hlayout>
+    </window>
+</zk>
