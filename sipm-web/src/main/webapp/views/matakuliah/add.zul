@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window title="${c:l('panelTitleMataKuliah')}" border="normal"
+	 closable="true" apply="com.os.sipm.controller.matakuliah.AddController"
+          action="show: slideIn({duration: 400})" >        
+        <hbox>
+            <grid width="500px" style="border-bottom:none;border-right:none;" >
+                <columns>
+                    <column width="25%"  align="right"  ></column>
+                    <column align="left" label="Content" ></column>
+                </columns>
+                <rows>
+                    <row >
+                        <label value="Kode : " />
+                        <textbox id="txtboxKode" value="" sclass="longWidth" />
+                    </row>
+                    <row>
+                        <label value="Nama : "/>
+                        <textbox id="txtboxNama" value="" sclass="longWidth"/>
+                    </row> 
+                    <row>
+                        <label value="SKS : "/>                        
+                        <intbox id="txtboxSks" value="0" sclass="longWidth"/>
+                    </row>
+                    <row>
+                        <label value="Jenis Mata Kuliah : "/>
+                        <combobox id="cmbboxJenisMataKuliah"/>
+                    </row>
+                    <row>
+                        <label value=""/>                               
+                        <hbox>                                    
+                            <toolbar mold="panel">
+                                <button id="btnSave" label="" width="30px" 
+                                image="img/save.png" tooltiptext="simpan" orient="vertical"/>    
+                            </toolbar>
+                        </hbox>                      
+                    </row>
+                </rows>
+            </grid>        
+        </hbox>        
+    </window>
+</zk>

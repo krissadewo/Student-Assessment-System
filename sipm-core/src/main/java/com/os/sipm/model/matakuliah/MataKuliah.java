@@ -4,21 +4,41 @@
  */
 package com.os.sipm.model.matakuliah;
 
+import com.os.sipm.model.jenisnilai.JenisNilai;
+
 /**
  *
  * @author kris
  */
 public class MataKuliah {
 
-    private int id;
+    private Integer id;
     private String kode;
     private String nama;
+    private Integer sks;
+    private JenisNilai jenisNilai;
 
-    public int getId() {
+    public JenisNilai getJenisNilai() {
+        return jenisNilai;
+    }
+
+    public void setJenisNilai(JenisNilai jenisNilai) {
+        this.jenisNilai = jenisNilai;
+    }
+
+    public Integer getSks() {
+        return sks;
+    }
+
+    public void setSks(Integer sks) {
+        this.sks = sks;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.os.sipm.model.matakuliah.MataKuliahDao" >
+     
+    <cache 
+        type="org.mybatis.caches.oscache.OSCache"
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"
+     />
+     
+    <resultMap id="results" type="MataKuliah">
+        <result property="id" column="id_matakuliah" />
+        <result property="kode" column="kode_matakuliah"/>
+        <result property="nama" column="nama_mataKuliah"/>     
+        <result property="sks" column="sks"/>
+        <result property="jenisNilai.id" column="id_jenis_nilai"/>
+        <result property="jenisNilai.namaJenis" column="nama_jenis"/>
+    </resultMap>
+       
+    <insert id="saveMataKuliah" flushCache="true">
+        INSERT INTO matakuliah(
+        kode_matakuliah, 
+        nama_mataKuliah,
+        sks,
+        id_jenis_nilai)        
+        VALUES(
+        #{kode}, 
+        #{nama},
+        #{sks},
+        #{jenisNilai.id})       
+    </insert>
+    
+    <update id="updateMataKuliah" flushCache="true">
+        UPDATE matakuliah SET 
+        kode_matakuliah = #{kode},
+        nama_mataKuliah = #{nama},
+        sks = #{sks},
+        id_jenis_nilai = #{jenisNilai.id}
+        WHERE id_mataKuliah = #{id}
+    </update>  
+           
+    <delete id="deleteMataKuliah" flushCache="true">
+        DELETE FROM matakuliah WHERE id_mataKuliah = #{id}
+    </delete>
+     
+    <select id="getAllMataKuliah"  resultMap="results" useCache="true">
+        SELECT *FROM matakuliah mk     
+        INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+        LIMIT #{limit} OFFSET #{cursor}
+    </select>
+    
+    <select id="getMataKuliahByKode"  resultMap="results" useCache="true">
+         SELECT *FROM matakuliah mk   
+         INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+         WHERE kode_matakuliah LIKE #{kode}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getMataKuliahByNama" resultMap="results" useCache="true">
+         SELECT *FROM matakuliah m       
+         INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = m.id_jenis_nilai
+         WHERE nama_mataKuliah LIKE #{nama}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getMataKuliahById" resultMap="results" useCache="true">
+        SELECT *FROM matakuliah mk      
+        INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+        WHERE id_mataKuliah = #{id}       
+    </select> 
+    
+    <select id="countAllMataKuliah" resultType="int" useCache="true">
+        SELECT COUNT(id_mataKuliah) FROM matakuliah mk 
+        INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+    </select>
+    
+    <select id="countAllMataKuliahByKode" resultType="int" useCache="true">
+        SELECT COUNT(id_mataKuliah) FROM matakuliah mk
+        INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+        WHERE kode_matakuliah LIKE #{kode}
+    </select>
+    
+    <select id="countAllMataKuliahByNama" resultType="int" useCache="true">
+        SELECT COUNT(id_mataKuliah) FROM matakuliah mk     
+        INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+        WHERE nama_mataKuliah LIKE #{nama}
+    </select>
+ 
+</mapper>

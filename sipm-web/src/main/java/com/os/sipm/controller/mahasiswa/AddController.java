@@ -9,7 +9,7 @@ import com.os.sipm.model.jurusan.Jurusan;
 import com.os.sipm.model.jurusan.JurusanService;
 import com.os.sipm.model.mahasiswa.Mahasiswa;
 import com.os.sipm.model.mahasiswa.MahasiswaService;
-import com.os.sipm.utils.SipmUtil;
+import com.os.sipm.utils.SipmUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class AddController extends GenericForwardComposer {
         if (selectedMahasiswa != null) {
             txtboxNim.setText(selectedMahasiswa.getNim());
             txtboxNama.setText(selectedMahasiswa.getNama());
-            cmbboxJurusan.setSelectedIndex(SipmUtil.getSelectedJurusan(jurusans, selectedMahasiswa.getJurusan().getNama()));
+            cmbboxJurusan.setSelectedIndex(SipmUtils.getSelectedJurusan(jurusans, selectedMahasiswa.getJurusan().getNama()));
         }
     }
 

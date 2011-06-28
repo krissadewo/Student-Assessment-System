@@ -2,11 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.os.sipm.dao;
+package com.os.sipm.service;
 
 import com.os.sipm.model.jurusan.Jurusan;
 import com.os.sipm.model.mahasiswa.Mahasiswa;
-import com.os.sipm.model.mahasiswa.MahasiswaService;
 import com.os.sipm.model.mahasiswa.MahasiswaService;
 import java.util.HashMap;
 import java.util.Map;

@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.os.sipm.controller.mahasiswa;
+package com.os.sipm.controller.matakuliah;
 
+import com.os.sipm.controller.mahasiswa.*;
+import com.os.sipm.model.dosen.Dosen;
 import com.os.sipm.model.mahasiswa.Mahasiswa;
+import com.os.sipm.model.mahasiswa.MahasiswaService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +24,11 @@ import org.zkoss.zul.Textbox;
  */
 public class SearchController extends GenericForwardComposer {
 
-    private Textbox txtboxNimCari;
+    private Textbox txtboxNipCari;
     private Textbox txtboxNamaCari;
-    private Checkbox chkboxNim;
+    private Checkbox chkboxNip;
     private Checkbox chkboxNama;
-    private List<Mahasiswa> mahasiswas;
+    private List<Dosen> dosens;
 
     @Override
     public void doAfterCompose(Component win) throws Exception {
@@ -34,20 +37,20 @@ public class SearchController extends GenericForwardComposer {
 
     public void onClick$btnCari(Event event) {
         Map params = new HashMap();
-        if (!txtboxNimCari.getValue().isEmpty()) {
-            params.put("nim", txtboxNimCari.getValue() + "%");
+        if (!txtboxNipCari.getValue().isEmpty()) {
+            params.put("nip", txtboxNipCari.getValue() + "%");
         } else if (!txtboxNamaCari.getValue().isEmpty()) {
             params.put("nama", txtboxNamaCari.getValue() + "%");
-        }       
+        }
         self.setAttribute("params", params);
         self.detach();
     }
 
     public void onClick$chkboxNim(Event event) {
-        if (chkboxNim.isChecked()) {
-            txtboxNimCari.setVisible(true);
+        if (chkboxNip.isChecked()) {
+            txtboxNipCari.setVisible(true);
         } else {
-            txtboxNimCari.setVisible(false);
+            txtboxNipCari.setVisible(false);
         }
     }
 
@@ -61,6 +64,6 @@ public class SearchController extends GenericForwardComposer {
 
     public void onClick$btnBatal(Event event) {
         txtboxNamaCari.setValue("");
-        txtboxNimCari.setValue("");
+        txtboxNipCari.setValue("");
     }
 }

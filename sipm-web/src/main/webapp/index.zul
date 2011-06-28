@@ -13,11 +13,8 @@
                     <div sclass="os-logo pointer">
                         <vlayout>
                             <label sclass="os-category-text">
-					Smart Human Resource System
-                            </label>
-                            <label sclass="os-category-text">
-					For Smart Company And People
-                            </label>
+					Student-Assessment-System
+                            </label>                          
                         </vlayout>
                     </div>
                     <categorybar zclass="os-categorybar" id="divMainMenu">
