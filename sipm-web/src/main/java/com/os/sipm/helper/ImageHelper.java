@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class ImageHelper {
 

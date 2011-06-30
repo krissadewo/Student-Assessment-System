@@ -3,6 +3,7 @@
  */
 package com.os.sipm.controller.general;
 
+import com.os.sipm.model.dosen.Dosen;
 import com.os.sipm.model.menu.Menu;
 import com.os.sipm.model.menu.MenuItem;
 import com.os.sipm.model.menu.MenuItemService;
@@ -33,7 +34,7 @@ import org.zkoss.zul.Panelchildren;
 import org.zkoss.zul.West;
 
 /**
- * @author kris Apr 22, 2011
+ * @author KrisSadewo Apr 22, 2011
  */
 @Controller
 public class IndexController extends GenericForwardComposer {
@@ -47,7 +48,6 @@ public class IndexController extends GenericForwardComposer {
     private List<Menu> menus;
     private List<MenuItem> menuItems;
     private West westContent;
-    private Session session;
     private Logger logger = Logger.getLogger(this.getClass());
 
     public IndexController() {
@@ -62,10 +62,20 @@ public class IndexController extends GenericForwardComposer {
 
     private void initComponent() {
         createMenuItem();
+        doFakeLogin();
+    }
+
+    private void doFakeLogin() {
+        logger.info("Creating session");
+        Dosen dosen = new Dosen();
+        dosen.setId(1);
+        dosen.setNip("D01");
+        dosen.setNama("Kris");
+        session.setAttribute("dosen", dosen);
     }
 
     private void createMenu() {
-        session = Sessions.getCurrent();
+        session = Sessions.getCurrent(true);
         XmlWebApplicationContext context = new XmlWebApplicationContext();
         context.setServletContext((ServletContext) session.getWebApp().getNativeContext());
         context.refresh();
@@ -86,8 +96,7 @@ public class IndexController extends GenericForwardComposer {
                     Listitem listitem = new Listitem();
                     Listcell listcell = new Listcell();
                     listcell.setImage(menuItem.getImagePath());
-                    listcell.setLabel(Labels.getLabel(menuItem.getMenuItemName()));
-                    LogUtils.logPreviousCommand(logger);
+                    listcell.setLabel(Labels.getLabel(menuItem.getMenuItemName()));                   
                     listitem.appendChild(listcell);
                     listitem.addEventListener("onClick", new EventListener() {
 

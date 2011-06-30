@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window title="${c:l('panelTitleDosenMataKuliah')}" border="normal"
+	 closable="true" apply="com.os.sipm.controller.dosen.matakuliah.AddController"
+          action="show: slideIn({duration: 400})" >        
+        <hbox>
+            <grid width="500px" style="border-bottom:none;border-right:none;" >
+                <columns>
+                    <column align="right" width="30%" />
+                    <column align="left" label="Content" style="border:none;"/>
+                    <column align="left" width="10%" style="border:none;"/>
+                </columns>
+                <rows>
+                    <row >
+                        <label value="Nip : " />
+                        <textbox id="txtboxNip" value="" sclass="longWidth" disabled="true" />
+                    </row>
+                    <row>
+                        <label value="Nama : "/>
+                        <textbox id="txtboxNama" value="" sclass="longWidth" disabled="true"/>
+                    </row>    
+                    <row>
+                        <label value="Mata Kuliah : "/>
+                        <combobox id="cmbboxMataKuliah" sclass="longWidth"/>
+                    </row>
+                    <row>
+                        <label value="Prosentase UTS : "/>
+                        <intbox id="txtboxUts" value="0" sclass="longWidth"/>
+                        <label value="%"/>
+                    </row> 
+                    <row>
+                        <label value="Prosentase UAS : "/>
+                        <intbox id="txtboxUas" value="0" sclass="longWidth"/>
+                        <label value="%"/>
+                    </row>
+                    <row>
+                        <label value="Prosentase Kuis 1 : "/>
+                        <intbox id="txtboxKuis1" value="0" sclass="longWidth"/>
+                        <label value="%"/>
+                    </row>
+                    <row>
+                        <label value="Prosentase Kuis 2 : "/>
+                        <intbox id="txtboxKuis2" value="0" sclass="longWidth"/>
+                        <label value="%"/>
+                    </row>
+                    <row>
+                        <label value="Prosentase Absensi : "/>
+                        <intbox id="txtboxAbsensi" value="0" sclass="longWidth"/>
+                        <label value="%"/>
+                    </row>
+                    <row>
+                        <label value="Prosentase Responsi : "/>
+                        <intbox id="txtboxResponsi" value="0" sclass="longWidth"/>
+                        <label value="%"/>
+                    </row>
+                    <row>
+                        <label value="Tahun : "/>
+                        <intbox id="txtboxTahun" value="0" sclass="longWidth"/>
+                    </row>
+                    <row>
+                        <label value="Semester : "/>
+                        <intbox id="txtboxSemester" value="0" sclass="longWidth"/>
+                    </row>
+                    <row>
+                        <label value="Jadwal : "/>
+                        <textbox id="txtboxJadwal" sclass="longWidth"/>
+                    </row>                    
+                    <row>
+                        <label value=""/>                               
+                        <hbox>                                    
+                            <toolbar mold="panel">
+                                <button id="btnSave" label="" width="30px" 
+                                image="img/save.png" tooltiptext="simpan" orient="vertical"/>    
+                            </toolbar>
+                        </hbox>                      
+                    </row>
+                </rows>
+            </grid>        
+        </hbox>        
+    </window>
+</zk>

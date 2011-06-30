@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public interface DosenDao {
 
@@ -23,7 +23,7 @@ public interface DosenDao {
 
     List<Dosen> getDosenByNip(Map<Object, Object> params);
 
-    List<Dosen> getDosenByNama(Map<Object, Object> params);
+    List<Dosen> getDosenByName(Map<Object, Object> params);
 
     List<Dosen> getAllDosen(Map<Object, Object> params);
 
@@ -31,5 +31,5 @@ public interface DosenDao {
 
     int countAllDosenByNip(Map<Object, Object> params);
 
-    int countAllDosenByNama(Map<Object, Object> params);
+    int countAllDosenByName(Map<Object, Object> params);
 }

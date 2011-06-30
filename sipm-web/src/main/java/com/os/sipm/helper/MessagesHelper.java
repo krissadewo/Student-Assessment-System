@@ -9,7 +9,7 @@ import org.zkoss.zul.Messagebox;
 
 /**
  * 
- * @author kris
+ * @author KrisSadewo
  */
 public class MessagesHelper {
 

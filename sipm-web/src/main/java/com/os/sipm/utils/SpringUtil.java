@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class SpringUtil {
 

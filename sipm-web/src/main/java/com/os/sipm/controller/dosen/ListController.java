@@ -27,7 +27,7 @@ import org.zkoss.zul.event.PagingEvent;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class ListController extends GenericForwardComposer {
 
@@ -113,7 +113,7 @@ public class ListController extends GenericForwardComposer {
     }
 
     public void loadDataDosenByNama(int cursor, final Map<Object, Object> params) {
-        paging.setTotalSize(dosenService.countAllDosenByNama(params));
+        paging.setTotalSize(dosenService.countAllDosenByName(params));
         // Show Listbox on the first
         generateDataDosenByNama(cursor, params);
         paging.addEventListener("onPaging", new EventListener() {

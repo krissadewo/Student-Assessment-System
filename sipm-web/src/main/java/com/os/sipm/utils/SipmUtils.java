@@ -6,13 +6,14 @@ package com.os.sipm.utils;
 
 import com.os.sipm.model.jenisnilai.JenisNilai;
 import com.os.sipm.model.jurusan.Jurusan;
+import com.os.sipm.model.matakuliah.MataKuliah;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class SipmUtils {
 
@@ -55,6 +56,18 @@ public class SipmUtils {
         int index = 0;
         for (JenisNilai jenisNilai : jenisNilais) {
             map.put(jenisNilai.getNamaJenis(), index++);
+        }
+        if (map.containsKey(nama)) {
+            index = map.get(nama);
+        }
+        return index;
+    }
+
+    public static int getSelectedMataKuliah(final List<MataKuliah> mataKuliahs, final String nama) {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        int index = 0;
+        for (MataKuliah mataKuliah : mataKuliahs) {
+            map.put(mataKuliah.getNama(), index++);
         }
         if (map.containsKey(nama)) {
             index = map.get(nama);

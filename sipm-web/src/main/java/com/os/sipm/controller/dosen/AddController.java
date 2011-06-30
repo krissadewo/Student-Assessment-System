@@ -22,7 +22,7 @@ import org.zkoss.zul.Textbox;
 
 /**
  * 
- * @author kris
+ * @author KrisSadewo
  */
 public class AddController extends GenericForwardComposer {
 

@@ -4,7 +4,6 @@
  */
 package com.os.sipm.model.dosen;
 
-import com.os.sipm.model.GenerateService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 @Service
 public class DosenService {
@@ -37,7 +36,7 @@ public class DosenService {
     }
 
     public List<Dosen> getByName(Map<Object, Object> params) {
-        return dosenDao.getDosenByNama(params);
+        return dosenDao.getDosenByName(params);
     }
 
     public List<Dosen> getByNip(Map<Object, Object> params) {
@@ -56,7 +55,7 @@ public class DosenService {
         return dosenDao.countAllDosenByNip(params);
     }
 
-    public int countAllDosenByNama(Map<Object, Object> params) {
-        return dosenDao.countAllDosenByNama(params);
+    public int countAllDosenByName(Map<Object, Object> params) {
+        return dosenDao.countAllDosenByName(params);
     }
 }

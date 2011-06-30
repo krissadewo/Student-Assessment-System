@@ -7,10 +7,12 @@ package com.os.sipm.utils;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class OsUtils {
 
@@ -38,5 +40,11 @@ public class OsUtils {
      */
     public static String mergeThis(String param1) {
         return new StringBuilder().append(param1).toString();
+    }
+
+    public static Object getActiveUserBySession(Session session, String attribute) {
+        session = Sessions.getCurrent();
+        Object object = session.getAttribute(attribute);
+        return object;
     }
 }

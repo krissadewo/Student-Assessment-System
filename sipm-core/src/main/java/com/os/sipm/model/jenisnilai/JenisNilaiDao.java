@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public interface JenisNilaiDao {
 

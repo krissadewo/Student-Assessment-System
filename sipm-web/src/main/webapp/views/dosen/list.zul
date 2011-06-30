@@ -18,7 +18,7 @@
                     <listhead sizable="true" >
                         <listheader id="listheaderNo" label="${c:l('listheaderNo')}" width="40px" align="right"/>
                         <listheader id="listheaderNip"  label="${c:l('listheaderNip')}" width="200px" sort="auto"  />
-                        <listheader id="listheaderNama" label="${c:l('listheaderNama')}"  sort="auto" />                         
+                        <listheader id="listheaderNamaDosen" label="${c:l('listheaderNamaDosen')}"  sort="auto" />                         
                     </listhead>
                 </listbox>              
             </panelchildren>

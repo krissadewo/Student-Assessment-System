@@ -6,7 +6,7 @@ package com.os.sipm.model.dosen;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class Dosen {
 
@@ -36,5 +36,40 @@ public class Dosen {
 
     public void setNip(String nip) {
         this.nip = nip;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Dosen other = (Dosen) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.nip == null) ? (other.nip != null) : !this.nip.equals(other.nip)) {
+            return false;
+        }
+        if ((this.nama == null) ? (other.nama != null) : !this.nama.equals(other.nama)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 29 * hash + (this.nip != null ? this.nip.hashCode() : 0);
+        hash = 29 * hash + (this.nama != null ? this.nama.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "Dosen{" + "id=" + id + ", nip=" + nip + ", nama=" + nama + '}';
     }
 }

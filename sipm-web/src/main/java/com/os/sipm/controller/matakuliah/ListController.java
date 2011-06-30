@@ -26,7 +26,7 @@ import org.zkoss.zul.event.PagingEvent;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public class ListController extends GenericForwardComposer {
 

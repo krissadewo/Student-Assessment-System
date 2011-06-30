@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 public interface GenerateService<T> {
 

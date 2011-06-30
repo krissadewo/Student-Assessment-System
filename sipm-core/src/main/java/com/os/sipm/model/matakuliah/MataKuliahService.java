@@ -4,7 +4,6 @@
  */
 package com.os.sipm.model.matakuliah;
 
-import com.os.sipm.model.GenerateService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 @Service
 public class MataKuliahService {

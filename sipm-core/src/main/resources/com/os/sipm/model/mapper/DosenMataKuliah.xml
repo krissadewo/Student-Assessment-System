@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.os.sipm.model.dosen.matakuliah.DosenMataKuliahDao" >
+     
+    <cache 
+        type="org.mybatis.caches.oscache.OSCache"
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"
+     />
+     
+    <resultMap id="results" type="Dosen">
+        <result property="id" column="id_dosen_matakuliah" />
+        <result property="uts" column="uts"/>
+        <result property="uas" column="uas"/>  
+        <result property="kuis1" column="kuis_1"/>  
+        <result property="kuis2" column="kuis_2"/>  
+        <result property="absensi" column="absensi"/>  
+        <result property="responsi" column="responsi"/>  
+        <result property="tahun" column="tahun"/>  
+        <result property="semester" column="semester"/>  
+        <result property="jadwal" column="jadwal"/>  
+        <result property="matakuliah.id" column="id_matakuliah"/>  
+        <result property="matakuliah.kode" column="kode_matakuliah"/>
+        <result property="matakuliah.nama" column="nama_matakuliah"/>  
+        <result property="matakuliah.sks" column="sks"/>  
+        <result property="dosen.id" column="id_dosen"/>  
+        <result property="dosen.nama" column="nama_dosen"/>  
+        <result property="dosen.nip" column="nip"/>  
+    </resultMap>
+       
+    <insert id="saveDosenMataKuliah" flushCache="true">
+        INSERT INTO dosen_matakuliah(
+        uts, 
+        uas,
+        kuis_1,
+        kuis_2,
+        absensi,
+        responsi,
+        tahun,
+        semester,
+        jadwal,
+        id_matakuliah,
+        id_dosen)        
+        VALUES(
+        #{uts}, 
+        #{uas},
+        #{kuis1},
+        #{kuis2},
+        #{absensi},
+        #{responsi},
+        #{tahun},
+        #{semester},
+        #{jadwal},
+        #{matakuliah.id},
+        #{dosen.id})
+    </insert>
+    
+    <update id="updateDosenMataKuliah" flushCache="true">
+        UPDATE dosen_matakuliah SET 
+        uts = #{uts},
+        uas = #{uas},
+        kuis_1 = #{kuis1},
+        kuis_2 = #{kuis2},
+        absensi = #{absensi},
+        responsi = #{responsi},
+        tahun = #{tahun},
+        semester = #{semester},
+        jadwal = #{jadwal},
+        id_matakuliah = #{matakuliah.id},
+        id_dosen = #{dosen.id}
+        WHERE id_dosen_matakuliah = #{id}
+    </update>  
+           
+    <delete id="deleteDosenMataKuliah" flushCache="true">
+        DELETE FROM dosen_matakuliah WHERE id_dosen_matakuliah = #{id}
+    </delete>
+     
+    <select id="getAllDosenMataKuliah"  resultMap="results" useCache="true">
+        SELECT *FROM dosen_matakuliah dm  
+        INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+        INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+        LIMIT #{limit} OFFSET #{cursor}
+    </select>
+    
+    <select id="getDosenMataKuliahByNip"  resultMap="results" useCache="true">
+         SELECT *FROM dosen_matakuliah dm  
+         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+         WHERE d.nip LIKE #{nip}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getDosenMataKuliahByNama" resultMap="results" useCache="true">
+         SELECT *FROM dosen_matakuliah dm 
+         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+         WHERE d.nama_dosen LIKE #{nama}
+         LIMIT #{limit} OFFSET #{cursor}         
+    </select>
+    
+    <select id="getDosenMataKuliahById" resultMap="results" useCache="true">
+        SELECT *FROM dosen_matakuliah dm   
+        INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+        INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+        WHERE id_dosen_matakuliah = #{id}       
+    </select> 
+    
+    <select id="countAllDosenMataKuliah" resultType="int" useCache="true">
+        SELECT COUNT(id_dosen_matakuliah) FROM dosen_matakuliah           
+    </select>
+    
+    <select id="countAllDosenMataKuliahByNip" resultType="int" useCache="true">
+        SELECT COUNT(id_dosen_matakuliah) FROM dosen_matakuliah  
+        INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+        INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+        WHERE d.nim LIKE #{nip}
+    </select>
+    
+    <select id="countAllDosenMataKuliahByNama" resultType="int" useCache="true">
+        SELECT COUNT(id_dosen_matakuliah) FROM dosen_matakuliah    
+        INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+        INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+        WHERE d.nama_dosen LIKE #{nama}
+    </select>
+ 
+</mapper>

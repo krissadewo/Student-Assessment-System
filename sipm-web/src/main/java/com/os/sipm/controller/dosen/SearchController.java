@@ -20,7 +20,7 @@ import org.zkoss.zul.Textbox;
 
 /**
  * 
- * @author kris
+ * @author KrisSadewo
  */
 public class SearchController extends GenericForwardComposer {
 

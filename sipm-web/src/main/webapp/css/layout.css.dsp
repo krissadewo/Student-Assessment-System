@@ -8,9 +8,22 @@
  .mediumWidth  .z-textbox-rounded-inp {
         width: 170px;
 }
+
+ .longWidth  .z-intbox-rounded-inp {
+        width: 280px;
+}
+ .mediumWidth  .z-intbox-rounded-inp {
+        width: 170px;
+}
+
+ .longWidth  .z-combobox-rounded-inp {
+        width: 260px;
+}  
  .mediumWidth  .z-combobox-rounded-inp {
         width: 80px;
-}       
+}  
+
+     
 tr.z-grid-odd td.z-row-inner,tr.z-grid-odd .z-cell,tr.z-grid-odd{
         background:#C1CDF5
         }

@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:com/os/sipm/config/SpringConfig.xml"})
@@ -34,6 +34,15 @@ public class MataKuliahServiceTest {
     }
 
     @Test
+    public void getAll() {
+        Map<Object, Object> params = new HashMap<Object, Object>();
+        params.put("limit", 10);
+        params.put("cursor", 0);
+        Assert.assertNotNull(mataKuliahService.getAll(null));
+        System.out.println(mataKuliahService.getAll(null).get(0).toString());
+    }
+
+    //@Test
     public void testAll() {
         Map<Object, Object> params = new HashMap<Object, Object>();
         MataKuliah mataKuliah = new MataKuliah();

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * hris-demo
  * 
- * @author kris Apr 17, 2011
+ * @author KrisSadewo Apr 17, 2011
  */
 public interface MenuItemDao {
 

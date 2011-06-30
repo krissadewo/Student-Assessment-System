@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author kris
+ * @author KrisSadewo
  */
 @Service
 public class JurusanService {

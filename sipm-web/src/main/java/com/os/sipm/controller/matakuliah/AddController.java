@@ -5,8 +5,6 @@
 package com.os.sipm.controller.matakuliah;
 
 import com.os.sipm.helper.MessagesHelper;
-import com.os.sipm.model.dosen.Dosen;
-import com.os.sipm.model.dosen.DosenService;
 import com.os.sipm.model.jenisnilai.JenisNilai;
 import com.os.sipm.model.jenisnilai.JenisNilaiService;
 import com.os.sipm.model.matakuliah.MataKuliah;
@@ -30,21 +28,20 @@ import org.zkoss.zul.Textbox;
 
 /**
  * 
- * @author kris
+ * @author KrisSadewo
  */
 public class AddController extends GenericForwardComposer {
 
-    @Autowired
-    private MataKuliahService mataKuliahService;
-    private MataKuliah selectedMataKuliah;
-    @Autowired
-    private JenisNilaiService jenisNilaiService;
-    private JenisNilai selectedJenisNilai;
-    private List<JenisNilai> jenisNilais;
     private Textbox txtboxKode;
     private Textbox txtboxNama;
     private Intbox txtboxSks;
     private Combobox cmbboxJenisMataKuliah;
+    @Autowired
+    private MataKuliahService mataKuliahService;
+    @Autowired
+    private JenisNilaiService jenisNilaiService;
+    private MataKuliah selectedMataKuliah;
+    private List<JenisNilai> jenisNilais;
     private Logger logger = Logger.getLogger(this.getClass());
 
     @Override
@@ -54,7 +51,7 @@ public class AddController extends GenericForwardComposer {
     }
 
     private void initComponent() {
-        loadDataMataKuliah();
+        loadDataJenisNilai();
         // Get param from parent window if exist
         selectedMataKuliah = (MataKuliah) Executions.getCurrent().getArg().get("selectedMataKuliah");
         if (selectedMataKuliah != null) {
@@ -65,13 +62,13 @@ public class AddController extends GenericForwardComposer {
         }
     }
 
-    private void loadDataMataKuliah() {
+    private void loadDataJenisNilai() {
         cmbboxJenisMataKuliah.getItems().clear();
         jenisNilais = jenisNilaiService.getAll();
-        for (JenisNilai department : jenisNilais) {
+        for (JenisNilai jenisNilai : jenisNilais) {
             Comboitem comboitem = new Comboitem();
-            comboitem.setValue(Integer.valueOf(department.getId()));
-            comboitem.setLabel(department.getNamaJenis());
+            comboitem.setValue(Integer.valueOf(jenisNilai.getId()));
+            comboitem.setLabel(jenisNilai.getNamaJenis());
             cmbboxJenisMataKuliah.appendChild(comboitem);
         }
         cmbboxJenisMataKuliah.setSelectedIndex(0);
