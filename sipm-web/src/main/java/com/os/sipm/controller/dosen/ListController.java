@@ -152,8 +152,9 @@ public class ListController extends GenericForwardComposer {
     public void onClick$btnAdd(Event event) throws InterruptedException {
         Window window = (Window) Executions.createComponents("/views/dosen/add.zul", this.self, null);
         window.doModal();
-        dosens = (List<Dosen>) window.getAttribute("dosens");
-        if (dosens != null) {
+        List<Dosen> dosenTemp = (List<Dosen>) window.getAttribute("dosens");
+        if (dosenTemp != null) {
+            dosens = dosenTemp;
             this.generateLisboxData(1);
         }
     }
@@ -166,8 +167,9 @@ public class ListController extends GenericForwardComposer {
             param.put("selectedDosen", selectedDosen);
             Window window = (Window) Executions.createComponents("/views/dosen/add.zul", this.self, param);
             window.doModal();
-            dosens = (List<Dosen>) window.getAttribute("dosens");
-            if (dosens != null) {
+            List<Dosen> dosenTemp = (List<Dosen>) window.getAttribute("dosens");
+            if (dosenTemp != null) {
+                dosens = dosenTemp;
                 this.generateLisboxData(1);
             }
         }

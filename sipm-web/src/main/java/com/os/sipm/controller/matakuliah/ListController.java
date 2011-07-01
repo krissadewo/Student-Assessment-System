@@ -7,6 +7,7 @@ package com.os.sipm.controller.matakuliah;
 import com.os.sipm.helper.MessagesHelper;
 import com.os.sipm.model.matakuliah.MataKuliah;
 import com.os.sipm.model.matakuliah.MataKuliahService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -32,11 +33,12 @@ public class ListController extends GenericForwardComposer {
 
     @Autowired
     private MataKuliahService mataKuliahService;
-    private Listbox listboxData; 
+    private Listbox listboxData;
     private final int LIMIT = 15;
     private List<MataKuliah> mataKuliahs;
     private Paging paging;
-    private MataKuliah selectedMataKuliah;   
+    private MataKuliah selectedMataKuliah;
+    private Map<Object, Object> params;
     private Logger logger = Logger.getLogger(this.getClass());
 
     @Override
@@ -46,29 +48,30 @@ public class ListController extends GenericForwardComposer {
     }
 
     private void init() {
-        loadDataMataKuliah(0, param);
+        params = new HashMap<Object, Object>();
+        loadDataMataKuliah(0);
     }
 
-    private void generateDataMataKuliah(final int cursor, Map<Object, Object> paramValues) {
+    private void generateDataMataKuliah(final int cursor) {
         int no = cursor + 1;
-        paramValues.put("limit", LIMIT);
-        paramValues.put("cursor", cursor);
-        if (paramValues.containsKey("kode")) {
-            paging.setTotalSize(mataKuliahService.countAllMataKuliahByKode(paramValues));
-            mataKuliahs = mataKuliahService.getByKode(paramValues);
-        } else if (paramValues.containsKey("nama")) {
-            paging.setTotalSize(mataKuliahService.countAllMataKuliahByNama(paramValues));
-            mataKuliahs = mataKuliahService.getByName(paramValues);
+        params.put("limit", LIMIT);
+        params.put("cursor", cursor);
+        if (params.containsKey("kode")) {
+            paging.setTotalSize(mataKuliahService.countAllMataKuliahByKode(params));
+            mataKuliahs = mataKuliahService.getByKode(params);
+        } else if (params.containsKey("nama")) {
+            paging.setTotalSize(mataKuliahService.countAllMataKuliahByNama(params));
+            mataKuliahs = mataKuliahService.getByName(params);
         } else {
             paging.setTotalSize(mataKuliahService.countAllMataKuliah());
-            mataKuliahs = mataKuliahService.getAll(paramValues);
+            mataKuliahs = mataKuliahService.getAll(params);
         }
         generateLisboxData(no);
     }
 
-    public void loadDataMataKuliah(final int cursor, final Map<Object, Object> paramValues) {
+    public void loadDataMataKuliah(final int cursor) {
         // Show Listbox on the first
-        generateDataMataKuliah(cursor, paramValues);
+        generateDataMataKuliah(cursor);
         paging.addEventListener("onPaging", new EventListener() {
 
             @Override
@@ -77,7 +80,7 @@ public class ListController extends GenericForwardComposer {
                 int activePage = pagingEvent.getActivePage();
                 int cursor = activePage * LIMIT;
                 // Redraw current paging
-                generateDataMataKuliah(cursor, paramValues);
+                generateDataMataKuliah(cursor);
             }
         });
     }
@@ -106,8 +109,9 @@ public class ListController extends GenericForwardComposer {
     public void onClick$btnAdd(Event event) throws InterruptedException {
         Window window = (Window) Executions.createComponents("/views/matakuliah/add.zul", this.self, null);
         window.doModal();
-        mataKuliahs = (List<MataKuliah>) window.getAttribute("mataKuliahs");
-        if (mataKuliahs != null) {
+        List<MataKuliah> mataKuliahTemp = (List<MataKuliah>) window.getAttribute("mataKuliahs");
+        if (mataKuliahTemp != null) {
+            mataKuliahs = mataKuliahTemp;
             this.generateLisboxData(1);
         }
     }
@@ -120,8 +124,9 @@ public class ListController extends GenericForwardComposer {
             param.put("selectedMataKuliah", selectedMataKuliah);
             Window window = (Window) Executions.createComponents("/views/matakuliah/add.zul", this.self, param);
             window.doModal();
-            mataKuliahs = (List<MataKuliah>) window.getAttribute("mataKuliahs");
-            if (mataKuliahs != null) {
+            List<MataKuliah> mataKuliahTemp = (List<MataKuliah>) window.getAttribute("mataKuliahs");
+            if (mataKuliahTemp != null) {
+                mataKuliahs = mataKuliahTemp;
                 this.generateLisboxData(1);
             }
         }
@@ -130,10 +135,10 @@ public class ListController extends GenericForwardComposer {
     public void onClick$btnSearch(Event event) throws InterruptedException {
         Window window = (Window) Executions.createComponents("/views/matakuliah/search.zul", this.self, null);
         window.doModal();
-        param = (Map) window.getAttribute("params");
-        if (param != null) {
+        params = (Map) window.getAttribute("params");
+        if (params != null) {
             paging.setTotalSize(0);
-            loadDataMataKuliah(0, param);
+            loadDataMataKuliah(0);
         }
     }
 
@@ -165,6 +170,6 @@ public class ListController extends GenericForwardComposer {
     }
 
     public void onClick$btnRefresh(Event event) {
-        loadDataMataKuliah(paging.getActivePage() * LIMIT, param);
+        loadDataMataKuliah(paging.getActivePage() * LIMIT);
     }
 }

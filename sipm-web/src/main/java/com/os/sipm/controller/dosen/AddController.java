@@ -77,8 +77,6 @@ public class AddController extends GenericForwardComposer {
         if (dosen != null) {
             Map<Object, Object> params = new HashMap<Object, Object>();
             params.put("nip", dosen.getNip());
-            params.put("limit", 1);
-            params.put("cursor", 0);
             List<Dosen> dosens = dosenService.getByNip(params);
             self.setAttribute("dosens", dosens);
         }

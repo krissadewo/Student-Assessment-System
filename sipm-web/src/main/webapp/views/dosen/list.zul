@@ -13,7 +13,7 @@
                 </toolbar>
             </caption>
             <panelchildren style="border-bottom:none;">      
-                <paging id="paging" pageSize="2"  autohide="true" detailed="true"/>        
+                <paging id="paging" pageSize="15"  autohide="true" detailed="true"/>        
                 <listbox id="listboxData" style="border-bottom:none;border-top:none;" >
                     <listhead sizable="true" >
                         <listheader id="listheaderNo" label="${c:l('listheaderNo')}" width="40px" align="right"/>

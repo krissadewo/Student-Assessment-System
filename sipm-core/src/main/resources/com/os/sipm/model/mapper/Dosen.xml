@@ -44,12 +44,18 @@
     </select>
     
     <select id="getDosenByNip"  resultMap="results" useCache="true">
+        <if test="limit == null">
+         SELECT *FROM dosen d        
+         WHERE nip LIKE #{nip}         
+        </if>
+        <if test="limit != null">
          SELECT *FROM dosen d        
          WHERE nip LIKE #{nip}
-         LIMIT #{limit} OFFSET #{cursor}         
+         LIMIT #{limit} OFFSET #{cursor}      
+        </if>           
     </select>
     
-    <select id="getDosenByNama" resultMap="results" useCache="true">
+    <select id="getDosenByName" resultMap="results" useCache="true">
          SELECT *FROM dosen d       
          WHERE nama_dosen LIKE #{nama}
          LIMIT #{limit} OFFSET #{cursor}         
@@ -66,10 +72,10 @@
     
     <select id="countAllDosenByNip" resultType="int" useCache="true">
         SELECT COUNT(id_dosen) FROM dosen           
-        WHERE nim LIKE #{nim}
+        WHERE nip LIKE #{nip}
     </select>
     
-    <select id="countAllDosenByNama" resultType="int" useCache="true">
+    <select id="countAllDosenByName" resultType="int" useCache="true">
         SELECT COUNT(id_dosen) FROM dosen           
         WHERE nama_dosen LIKE #{nama}
     </select>

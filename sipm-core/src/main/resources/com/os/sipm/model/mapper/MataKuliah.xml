@@ -60,10 +60,17 @@
     </select>
     
     <select id="getMataKuliahByKode"  resultMap="results" useCache="true">
+        <if test="limit == null">
+         SELECT *FROM matakuliah mk   
+         INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
+         WHERE kode_matakuliah LIKE #{kode}                 
+        </if>
+        <if test="limit != null">
          SELECT *FROM matakuliah mk   
          INNER JOIN jenis_nilai jn ON jn.id_jenis_nilai = mk.id_jenis_nilai
          WHERE kode_matakuliah LIKE #{kode}
-         LIMIT #{limit} OFFSET #{cursor}         
+         LIMIT #{limit} OFFSET #{cursor}        
+        </if>
     </select>
     
     <select id="getMataKuliahByNama" resultMap="results" useCache="true">

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.os.sipm.controller.dosen.matakuliah;
+package com.os.sipm.controller.matakuliah.dosen;
 
 import com.os.sipm.model.dosen.Dosen;
 import java.util.HashMap;

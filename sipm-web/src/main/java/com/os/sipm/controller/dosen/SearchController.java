@@ -4,10 +4,7 @@
  */
 package com.os.sipm.controller.dosen;
 
-import com.os.sipm.controller.mahasiswa.*;
 import com.os.sipm.model.dosen.Dosen;
-import com.os.sipm.model.mahasiswa.Mahasiswa;
-import com.os.sipm.model.mahasiswa.MahasiswaService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +25,6 @@ public class SearchController extends GenericForwardComposer {
     private Textbox txtboxNamaCari;
     private Checkbox chkboxNip;
     private Checkbox chkboxNama;
-    private List<Dosen> dosens;
 
     @Override
     public void doAfterCompose(Component win) throws Exception {
@@ -46,7 +42,7 @@ public class SearchController extends GenericForwardComposer {
         self.detach();
     }
 
-    public void onClick$chkboxNim(Event event) {
+    public void onClick$chkboxNip(Event event) {
         if (chkboxNip.isChecked()) {
             txtboxNipCari.setVisible(true);
         } else {

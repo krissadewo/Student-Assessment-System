@@ -51,10 +51,17 @@
     </select>
     
     <select id="getMahasiswaByNim"  resultMap="results" useCache="true">
+        <if test="limit == null">
+         SELECT *FROM mahasiswa m
+         INNER JOIN jurusan j ON j.id_jurusan = m.id_jurusan
+         WHERE nim LIKE #{nim}        
+        </if>
+        <if test="limit != null">
          SELECT *FROM mahasiswa m
          INNER JOIN jurusan j ON j.id_jurusan = m.id_jurusan
          WHERE nim LIKE #{nim}
-         LIMIT #{limit} OFFSET #{cursor}         
+         LIMIT #{limit} OFFSET #{cursor} 
+        </if>      
     </select>
     
     <select id="getMahasiswaByNama" resultMap="results" useCache="true">

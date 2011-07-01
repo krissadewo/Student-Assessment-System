@@ -1,8 +1,8 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <div apply="com.os.sipm.controller.dosen.matakuliah.ListController" action="show: slideIn({duration: 400})"  >
-        <panel id="panelTitleDosen" title="${c:l('panelTitleDosenMataKuliah')}" >
+    <div apply="com.os.sipm.controller.matakuliah.dosen.ListController" action="show: slideIn({duration: 400})"  >
+        <panel id="panelTitleDosen" title="${c:l('panelTitleMataKuliahDosen')}" >
             <caption>
                 <toolbar align="end">
                     <toolbarbutton id="btnAdd" image="img/add.ico" tooltiptext="${c:l('btnAdd')}"/>
@@ -13,12 +13,13 @@
                 </toolbar>
             </caption>
             <panelchildren style="border-bottom:none;">      
-                <paging id="paging" pageSize="2"  autohide="true" detailed="true"/>        
+                <paging id="paging" pageSize="15"  autohide="true" detailed="true"/>        
                 <listbox id="listboxData" style="border-bottom:none;border-top:none;" >
                     <listhead sizable="true" >
                         <listheader id="listheaderNo" label="${c:l('listheaderNo')}" width="40px" align="right"/>
                         <listheader id="listheaderNamaDosen"  label="${c:l('listheaderNamaDosen')}" width="400px" sort="auto"  />
                         <listheader id="listheaderNamaMataKuliah" label="${c:l('listheaderNamaMataKuliah')}"  width="400px"  sort="auto" /> 
+                        <listheader id="listheaderKelas" label="${c:l('listheaderKelas')}" width="100px"  align="center" sort="auto" /> 
                         <listheader id="listheaderSks" label="${c:l('listheaderSks')}" width="100px"  align="center" sort="auto" /> 
                         <listheader id="listheaderDetail" label="${c:l('listheaderDetail')}" align="center" sort="auto" />
                     </listhead>

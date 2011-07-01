@@ -77,8 +77,7 @@ public class AddController extends GenericForwardComposer {
         cmbboxJurusan.setSelectedIndex(0);
     }
 
-    public void onClick$btnSave(Event event) {
-        logger.info(cmbboxJurusan.getSelectedItem().getValue());
+    public void onClick$btnSave(Event event) {        
         Jurusan jurusan = new Jurusan();
         jurusan.setId(Integer.valueOf(cmbboxJurusan.getSelectedItem().getValue().toString()));
 
@@ -105,9 +104,7 @@ public class AddController extends GenericForwardComposer {
         // Send data pribadi to parent window
         if (mahasiswa != null) {
             Map<Object, Object> params = new HashMap<Object, Object>();
-            params.put("nim", mahasiswa.getNim());
-            params.put("limit", 1);
-            params.put("cursor", 0);
+            params.put("nim", mahasiswa.getNim());         
             List<Mahasiswa> mahasiswas = mahasiswaService.getByNim(params);
             self.setAttribute("mahasiswas", mahasiswas);
         }

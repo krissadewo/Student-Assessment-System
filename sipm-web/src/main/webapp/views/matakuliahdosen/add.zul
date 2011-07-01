@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <window title="${c:l('panelTitleDosenMataKuliah')}" border="normal"
-	 closable="true" apply="com.os.sipm.controller.dosen.matakuliah.AddController"
+    <window title="${c:l('panelTitleMataKuliahDosen')}" border="normal"
+	 closable="true" apply="com.os.sipm.controller.matakuliah.dosen.AddController"
           action="show: slideIn({duration: 400})" >        
         <hbox>
             <grid width="500px" style="border-bottom:none;border-right:none;" >
@@ -62,6 +62,10 @@
                         <label value="Semester : "/>
                         <intbox id="txtboxSemester" value="0" sclass="longWidth"/>
                     </row>
+                    <row>
+                        <label value="Kelas : "/>
+                        <textbox id="txtboxKelas" sclass="longWidth"/>
+                    </row> 
                     <row>
                         <label value="Jadwal : "/>
                         <textbox id="txtboxJadwal" sclass="longWidth"/>

@@ -109,9 +109,7 @@ public class AddController extends GenericForwardComposer {
         // Send data pribadi to parent window
         if (mataKuliah != null) {
             Map<Object, Object> params = new HashMap<Object, Object>();
-            params.put("kode", mataKuliah.getKode());
-            params.put("limit", 1);
-            params.put("cursor", 0);
+            params.put("kode", mataKuliah.getKode());           
             List<MataKuliah> mataKuliahs = mataKuliahService.getByKode(params);
             self.setAttribute("mataKuliahs", mataKuliahs);
         }

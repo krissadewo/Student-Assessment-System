@@ -7,6 +7,7 @@ package com.os.sipm.controller.mahasiswa;
 import com.os.sipm.helper.MessagesHelper;
 import com.os.sipm.model.mahasiswa.Mahasiswa;
 import com.os.sipm.model.mahasiswa.MahasiswaService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -32,14 +33,15 @@ import org.zkoss.zul.event.PagingEvent;
  */
 public class ListController extends GenericForwardComposer {
 
-    @Autowired
-    private MahasiswaService mahasiswaService;
-    private Logger logger = Logger.getLogger(this.getClass());
     private Listbox listboxData;
     private List<Mahasiswa> mahasiswas;
+    @Autowired
+    private MahasiswaService mahasiswaService;
     private Mahasiswa selectedMahasiswa;
     private Paging paging;
     private final int LIMIT = 2;
+    private Map<Object, Object> params;
+    private Logger logger = Logger.getLogger(this.getClass());
 
     @Override
     public void doAfterCompose(Component win) throws Exception {
@@ -48,29 +50,30 @@ public class ListController extends GenericForwardComposer {
     }
 
     private void init() {
-        loadDataMahasiswa(0, param);
+        params = new HashMap<Object, Object>();
+        loadDataMahasiswa(0);
     }
 
-    private void generateDataMahasiswa(final int cursor, Map<Object, Object> paramValues) {
+    private void generateDataMahasiswa(final int cursor) {
         int no = cursor + 1;
-        paramValues.put("limit", LIMIT);
-        paramValues.put("cursor", cursor);
-        if (paramValues.containsKey("nim")) {
-            paging.setTotalSize(mahasiswaService.countAllMahasiswaByNim(paramValues));
-            mahasiswas = mahasiswaService.getByNim(paramValues);
-        } else if (paramValues.containsKey("nama")) {
-            paging.setTotalSize(mahasiswaService.countAllMahasiswaByNama(paramValues));
-            mahasiswas = mahasiswaService.getByName(paramValues);
+        params.put("limit", LIMIT);
+        params.put("cursor", cursor);
+        if (params.containsKey("nim")) {
+            paging.setTotalSize(mahasiswaService.countAllMahasiswaByNim(params));
+            mahasiswas = mahasiswaService.getByNim(params);
+        } else if (params.containsKey("nama")) {
+            paging.setTotalSize(mahasiswaService.countAllMahasiswaByNama(params));
+            mahasiswas = mahasiswaService.getByName(params);
         } else {
             paging.setTotalSize(mahasiswaService.countAllMahasiswa());
-            mahasiswas = mahasiswaService.getAll(paramValues);
+            mahasiswas = mahasiswaService.getAll(params);
         }
         generateLisboxData(no);
     }
 
-    public void loadDataMahasiswa(int cursor, final Map<Object, Object> paramValues) {
+    public void loadDataMahasiswa(int cursor) {
         // Show Listbox on the first
-        generateDataMahasiswa(cursor, paramValues);
+        generateDataMahasiswa(cursor);
         paging.addEventListener("onPaging", new EventListener() {
 
             @Override
@@ -79,7 +82,7 @@ public class ListController extends GenericForwardComposer {
                 int activePage = pagingEvent.getActivePage();
                 int cursor = activePage * LIMIT;
                 // Redraw current paging
-                generateDataMahasiswa(cursor, paramValues);
+                generateDataMahasiswa(cursor);
             }
         });
     }
@@ -120,8 +123,9 @@ public class ListController extends GenericForwardComposer {
     public void onClick$btnAdd(Event event) throws InterruptedException {
         Window window = (Window) Executions.createComponents("/views/mahasiswa/add.zul", this.self, null);
         window.doModal();
-        mahasiswas = (List<Mahasiswa>) window.getAttribute("mahasiswas");
-        if (mahasiswas != null) {
+        List<Mahasiswa> mahasiswaTemp = (List<Mahasiswa>) window.getAttribute("mahasiswas");
+        if (mahasiswaTemp != null) {
+            mahasiswas = mahasiswaTemp;
             this.generateLisboxData(1);
         }
     }
@@ -134,8 +138,9 @@ public class ListController extends GenericForwardComposer {
             param.put("selectedMahasiswa", selectedMahasiswa);
             Window window = (Window) Executions.createComponents("/views/mahasiswa/add.zul", this.self, param);
             window.doModal();
-            mahasiswas = (List<Mahasiswa>) window.getAttribute("mahasiswas");
-            if (mahasiswas != null) {
+            List<Mahasiswa> mahasiswaTemp = (List<Mahasiswa>) window.getAttribute("mahasiswas");
+            if (mahasiswaTemp != null) {
+                mahasiswas = mahasiswaTemp;
                 this.generateLisboxData(1);
             }
         }
@@ -143,11 +148,11 @@ public class ListController extends GenericForwardComposer {
 
     public void onClick$btnSearch(Event event) throws InterruptedException {
         Window window = (Window) Executions.createComponents("/views/mahasiswa/search.zul", this.self, null);
-        window.doModal();        
-        param = (Map) window.getAttribute("params");        
-        if (param != null) {
+        window.doModal();
+        params = (Map) window.getAttribute("params");
+        if (params != null) {
             paging.setTotalSize(0);
-            loadDataMahasiswa(0, param);
+            loadDataMahasiswa(0);
         }
     }
 
@@ -179,6 +184,6 @@ public class ListController extends GenericForwardComposer {
     }
 
     public void onClick$btnRefresh(Event event) {
-        loadDataMahasiswa(paging.getActivePage() * LIMIT, param);
+        loadDataMahasiswa(paging.getActivePage() * LIMIT);
     }
 }

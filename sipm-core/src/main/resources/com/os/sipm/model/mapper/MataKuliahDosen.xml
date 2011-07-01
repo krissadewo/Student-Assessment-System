@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="com.os.sipm.model.dosen.matakuliah.DosenMataKuliahDao" >
+<mapper namespace="com.os.sipm.model.matakuliah.dosen.MataKuliahDosenDao" >
      
     <cache 
         type="org.mybatis.caches.oscache.OSCache"
@@ -12,8 +12,8 @@
         readOnly="true"
      />
      
-    <resultMap id="results" type="Dosen">
-        <result property="id" column="id_dosen_matakuliah" />
+    <resultMap id="results" type="MataKuliahDosen">
+        <result property="id" column="id_matakuliah_dosen" />
         <result property="uts" column="uts"/>
         <result property="uas" column="uas"/>  
         <result property="kuis1" column="kuis_1"/>  
@@ -23,17 +23,18 @@
         <result property="tahun" column="tahun"/>  
         <result property="semester" column="semester"/>  
         <result property="jadwal" column="jadwal"/>  
-        <result property="matakuliah.id" column="id_matakuliah"/>  
-        <result property="matakuliah.kode" column="kode_matakuliah"/>
-        <result property="matakuliah.nama" column="nama_matakuliah"/>  
-        <result property="matakuliah.sks" column="sks"/>  
+        <result property="kelas" column="kelas"/>  
+        <result property="mataKuliah.id" column="id_matakuliah"/>  
+        <result property="mataKuliah.kode" column="kode_matakuliah"/>
+        <result property="mataKuliah.nama" column="nama_matakuliah"/>  
+        <result property="mataKuliah.sks" column="sks"/>  
         <result property="dosen.id" column="id_dosen"/>  
         <result property="dosen.nama" column="nama_dosen"/>  
         <result property="dosen.nip" column="nip"/>  
     </resultMap>
        
-    <insert id="saveDosenMataKuliah" flushCache="true">
-        INSERT INTO dosen_matakuliah(
+    <insert id="saveMataKuliahDosen" flushCache="true">
+        INSERT INTO matakuliah_dosen(
         uts, 
         uas,
         kuis_1,
@@ -43,6 +44,7 @@
         tahun,
         semester,
         jadwal,
+        kelas,
         id_matakuliah,
         id_dosen)        
         VALUES(
@@ -55,12 +57,13 @@
         #{tahun},
         #{semester},
         #{jadwal},
-        #{matakuliah.id},
+        #{kelas},
+        #{mataKuliah.id},
         #{dosen.id})
     </insert>
     
-    <update id="updateDosenMataKuliah" flushCache="true">
-        UPDATE dosen_matakuliah SET 
+    <update id="updateMataKuliahDosen" flushCache="true">
+        UPDATE matakuliah_dosen SET 
         uts = #{uts},
         uas = #{uas},
         kuis_1 = #{kuis1},
@@ -70,58 +73,67 @@
         tahun = #{tahun},
         semester = #{semester},
         jadwal = #{jadwal},
-        id_matakuliah = #{matakuliah.id},
+        kelas = #{kelas},
+        id_matakuliah = #{mataKuliah.id},
         id_dosen = #{dosen.id}
-        WHERE id_dosen_matakuliah = #{id}
+        WHERE id_matakuliah_dosen = #{id}
     </update>  
            
-    <delete id="deleteDosenMataKuliah" flushCache="true">
-        DELETE FROM dosen_matakuliah WHERE id_dosen_matakuliah = #{id}
+    <delete id="deleteMataKuliahDosen" flushCache="true">
+        DELETE FROM matakuliah_dosen WHERE id_matakuliah_dosen = #{id}
     </delete>
      
-    <select id="getAllDosenMataKuliah"  resultMap="results" useCache="true">
-        SELECT *FROM dosen_matakuliah dm  
+    <select id="getAllMataKuliahDosen"  resultMap="results" flushCache="true">
+        SELECT *FROM matakuliah_dosen dm  
         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
         LIMIT #{limit} OFFSET #{cursor}
     </select>
     
-    <select id="getDosenMataKuliahByNip"  resultMap="results" useCache="true">
-         SELECT *FROM dosen_matakuliah dm  
+    <select id="getMataKuliahDosenByNip"  resultMap="results" useCache="true">
+        <if test="limit == null">
+         SELECT *FROM matakuliah_dosen dm  
          INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
          INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
-         WHERE d.nip LIKE #{nip}
-         LIMIT #{limit} OFFSET #{cursor}         
+         WHERE d.nip LIKE #{nip} AND mk.id_matakuliah = #{id_matakuliah} AND dm.kelas = #{kelas}            
+        </if>
+        <if test="limit != null">
+         SELECT *FROM matakuliah_dosen dm  
+         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
+         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
+         WHERE d.nip LIKE #{nip} AND mk.id_matakuliah = #{id_matakuliah} AND dm.kelas = #{kelas}
+         LIMIT #{limit} OFFSET #{cursor}       
+        </if>
     </select>
     
-    <select id="getDosenMataKuliahByNama" resultMap="results" useCache="true">
-         SELECT *FROM dosen_matakuliah dm 
+    <select id="getMataKuliahDosenByNama" resultMap="results" useCache="true">
+         SELECT *FROM matakuliah_dosen dm 
          INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
          INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
          WHERE d.nama_dosen LIKE #{nama}
          LIMIT #{limit} OFFSET #{cursor}         
     </select>
     
-    <select id="getDosenMataKuliahById" resultMap="results" useCache="true">
-        SELECT *FROM dosen_matakuliah dm   
+    <select id="getMataKuliahDosenById" resultMap="results" useCache="true">
+        SELECT *FROM matakuliah_dosen dm   
         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
-        WHERE id_dosen_matakuliah = #{id}       
+        WHERE id_matakuliah_dosen = #{id}       
     </select> 
     
-    <select id="countAllDosenMataKuliah" resultType="int" useCache="true">
-        SELECT COUNT(id_dosen_matakuliah) FROM dosen_matakuliah           
+    <select id="countAllMataKuliahDosen" resultType="int" useCache="true">
+        SELECT COUNT(id_matakuliah_dosen) FROM matakuliah_dosen           
     </select>
     
-    <select id="countAllDosenMataKuliahByNip" resultType="int" useCache="true">
-        SELECT COUNT(id_dosen_matakuliah) FROM dosen_matakuliah  
+    <select id="countAllMataKuliahDosenByNip" resultType="int" useCache="true">
+        SELECT COUNT(id_matakuliah_dosen) FROM matakuliah_dosen  
         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
-        WHERE d.nim LIKE #{nip}
+        WHERE d.nip LIKE #{nip} AND mk.id_matakuliah = #{mataKuliah.id}
     </select>
     
-    <select id="countAllDosenMataKuliahByNama" resultType="int" useCache="true">
-        SELECT COUNT(id_dosen_matakuliah) FROM dosen_matakuliah    
+    <select id="countAllMataKuliahDosenByNama" resultType="int" useCache="true">
+        SELECT COUNT(id_matakuliah_dosen) FROM matakuliah_dosen    
         INNER JOIN matakuliah mk ON mk.id_matakuliah = dm.id_matakuliah
         INNER JOIN dosen d ON d.id_dosen = dm.id_dosen
         WHERE d.nama_dosen LIKE #{nama}

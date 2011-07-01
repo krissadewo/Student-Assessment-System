@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.os.sipm.model.dosen.matakuliah;
+package com.os.sipm.model.matakuliah.dosen;
 
 import com.os.sipm.model.dosen.Dosen;
 import com.os.sipm.model.matakuliah.MataKuliah;
@@ -11,7 +11,7 @@ import com.os.sipm.model.matakuliah.MataKuliah;
  *
  * @author KrisSadewo
  */
-public class DosenMataKuliah {
+public class MataKuliahDosen {
 
     private Integer id;
     private int uts;
@@ -23,8 +23,17 @@ public class DosenMataKuliah {
     private int tahun;
     private int semester;
     private String jadwal;
+    private String kelas;
     private MataKuliah mataKuliah;
     private Dosen dosen;
+
+    public String getKelas() {
+        return kelas;
+    }
+
+    public void setKelas(String kelas) {
+        this.kelas = kelas;
+    }
 
     public int getAbsensi() {
         return absensi;
@@ -130,7 +139,7 @@ public class DosenMataKuliah {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DosenMataKuliah other = (DosenMataKuliah) obj;
+        final MataKuliahDosen other = (MataKuliahDosen) obj;
         if (this.id != other.id) {
             return false;
         }

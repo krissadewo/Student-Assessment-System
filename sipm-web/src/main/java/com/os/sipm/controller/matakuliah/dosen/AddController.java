@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.os.sipm.controller.dosen.matakuliah;
+package com.os.sipm.controller.matakuliah.dosen;
 
 import com.os.sipm.helper.MessagesHelper;
 import com.os.sipm.model.dosen.Dosen;
-import com.os.sipm.model.dosen.matakuliah.DosenMataKuliah;
-import com.os.sipm.model.dosen.matakuliah.DosenMataKuliahService;
+import com.os.sipm.model.matakuliah.dosen.MataKuliahDosen;
+import com.os.sipm.model.matakuliah.dosen.MataKuliahDosenService;
 import com.os.sipm.model.matakuliah.MataKuliah;
 import com.os.sipm.model.matakuliah.MataKuliahService;
 import com.os.sipm.utils.OsUtils;
@@ -45,12 +45,13 @@ public class AddController extends GenericForwardComposer {
     private Intbox txtboxTahun;
     private Intbox txtboxSemester;
     private Textbox txtboxJadwal;
+    private Textbox txtboxKelas;
     private Combobox cmbboxMataKuliah;
     @Autowired
-    private DosenMataKuliahService dosenMataKuliahService;
+    private MataKuliahDosenService mataKuliahDosenService;
     @Autowired
     private MataKuliahService mataKuliahService;
-    private DosenMataKuliah selectedDosenMataKuliah;
+    private MataKuliahDosen selectedMataKuliahDosen;
     private List<MataKuliah> mataKuliahs;
     private Logger logger = Logger.getLogger(this.getClass());
     private Dosen selectedDosen;
@@ -68,8 +69,19 @@ public class AddController extends GenericForwardComposer {
         // Get param from parent window if exist
         txtboxNip.setText(selectedDosen.getNip());
         txtboxNama.setText(selectedDosen.getNama());
-        selectedDosenMataKuliah = (DosenMataKuliah) Executions.getCurrent().getArg().get("selectedDosen");
-        if (selectedDosenMataKuliah != null) {
+        selectedMataKuliahDosen = (MataKuliahDosen) Executions.getCurrent().getArg().get("selectedDosenMataKuliah");
+        if (selectedMataKuliahDosen != null) {
+            txtboxUts.setValue(selectedMataKuliahDosen.getUts());
+            txtboxUas.setValue(selectedMataKuliahDosen.getUas());
+            txtboxKuis1.setValue(selectedMataKuliahDosen.getKuis1());
+            txtboxKuis2.setValue(selectedMataKuliahDosen.getKuis2());
+            txtboxAbsensi.setValue(selectedMataKuliahDosen.getAbsensi());
+            txtboxResponsi.setValue(selectedMataKuliahDosen.getResponsi());
+            txtboxSemester.setValue(selectedMataKuliahDosen.getSemester());
+            txtboxTahun.setValue(selectedMataKuliahDosen.getTahun());
+            txtboxJadwal.setValue(selectedMataKuliahDosen.getJadwal());
+            txtboxKelas.setValue(selectedMataKuliahDosen.getKelas());
+            cmbboxMataKuliah.setSelectedIndex(SipmUtils.getSelectedMataKuliah(mataKuliahs, selectedMataKuliahDosen.getMataKuliah().getNama()));
         }
     }
 
@@ -88,39 +100,59 @@ public class AddController extends GenericForwardComposer {
     private void componentClear() {
         txtboxNip.setValue("");
         txtboxNama.setValue("");
+        txtboxUts.setValue(0);
+        txtboxUas.setValue(0);
+        txtboxKuis1.setValue(0);
+        txtboxKuis2.setValue(0);
+        txtboxAbsensi.setValue(0);
+        txtboxResponsi.setValue(0);
+        txtboxSemester.setValue(0);
+        txtboxTahun.setValue(0);
+        txtboxJadwal.setValue("");
+        txtboxKelas.setValue("");
+        cmbboxMataKuliah.setSelectedIndex(0);
     }
 
     public void onClick$btnSave(Event event) {
-        DosenMataKuliah dosenMataKuliah = new DosenMataKuliah();
+        MataKuliahDosen mataKuliahDosen = new MataKuliahDosen();
         if (txtboxNip.getText().isEmpty()) {
             throw new WrongValueException(txtboxNip, MessagesHelper.dataEmpty());
         }
         if (txtboxNama.getText().isEmpty()) {
             throw new WrongValueException(txtboxNama, MessagesHelper.dataEmpty());
         }
-        if (selectedDosenMataKuliah != null) {
-            dosenMataKuliah.setId(selectedDosenMataKuliah.getId());
+        if (selectedMataKuliahDosen != null) {
+            mataKuliahDosen.setId(selectedMataKuliahDosen.getId());
         }
         MataKuliah mataKuliah = new MataKuliah();
-        mataKuliah.setId(Integer.valueOf(SipmUtils.getSelectedMataKuliah(mataKuliahs, cmbboxMataKuliah.getSelectedItem().toString())));
-        dosenMataKuliah.setDosen(selectedDosen);
-
-
-
-        if (dosenMataKuliahService.saveOrUpdate(dosenMataKuliah) == 1) {
+        mataKuliah.setId(Integer.valueOf(cmbboxMataKuliah.getSelectedItem().getValue().toString()));
+        mataKuliahDosen.setDosen(selectedDosen);
+        mataKuliahDosen.setMataKuliah(mataKuliah);
+        mataKuliahDosen.setUts(txtboxUts.getValue());
+        mataKuliahDosen.setUas(txtboxUas.getValue());
+        mataKuliahDosen.setKuis1(txtboxKuis1.getValue());
+        mataKuliahDosen.setKuis2(txtboxKuis2.getValue());
+        mataKuliahDosen.setAbsensi(txtboxAbsensi.getValue());
+        mataKuliahDosen.setResponsi(txtboxResponsi.getValue());
+        mataKuliahDosen.setSemester(txtboxSemester.getValue());
+        mataKuliahDosen.setTahun(txtboxTahun.getValue());
+        mataKuliahDosen.setJadwal(txtboxJadwal.getValue());
+        mataKuliahDosen.setKelas(txtboxKelas.getValue());
+        if (mataKuliahDosenService.saveOrUpdate(mataKuliahDosen) == 1) {
             this.componentClear();
             MessagesHelper.saveSuccess();
         } else {
             MessagesHelper.saveFailed();
         }
-        // Send data pribadi to parent window
-        if (selectedDosenMataKuliah != null) {
+        //Send data to parent window
+        if (mataKuliahDosen != null) {
+            logger.info("GO TO HERE");
             Map<Object, Object> params = new HashMap<Object, Object>();
             params.put("nip", selectedDosen.getNip());
-            params.put("limit", 1);
-            params.put("cursor", 0);
-            List<DosenMataKuliah> dosenMataKuliahs = dosenMataKuliahService.getByNip(params);
-            self.setAttribute("dosenMataKuliahs", dosenMataKuliahs);
+            params.put("id_matakuliah", mataKuliah.getId());
+            params.put("kelas", mataKuliahDosen.getKelas());
+            List<MataKuliahDosen> mataKuliahDosens = mataKuliahDosenService.getByNip(params);
+            self.setAttribute("mataKuliahDosens", mataKuliahDosens);
         }
         self.detach();
     }

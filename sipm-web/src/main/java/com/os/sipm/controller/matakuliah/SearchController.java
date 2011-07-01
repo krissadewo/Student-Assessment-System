@@ -24,11 +24,10 @@ import org.zkoss.zul.Textbox;
  */
 public class SearchController extends GenericForwardComposer {
 
-    private Textbox txtboxNipCari;
+    private Textbox txtboxKodeCari;
     private Textbox txtboxNamaCari;
-    private Checkbox chkboxNip;
+    private Checkbox chkboxKode;
     private Checkbox chkboxNama;
-    private List<Dosen> dosens;
 
     @Override
     public void doAfterCompose(Component win) throws Exception {
@@ -37,8 +36,8 @@ public class SearchController extends GenericForwardComposer {
 
     public void onClick$btnCari(Event event) {
         Map params = new HashMap();
-        if (!txtboxNipCari.getValue().isEmpty()) {
-            params.put("nip", txtboxNipCari.getValue() + "%");
+        if (!txtboxKodeCari.getValue().isEmpty()) {
+            params.put("kode", txtboxKodeCari.getValue() + "%");
         } else if (!txtboxNamaCari.getValue().isEmpty()) {
             params.put("nama", txtboxNamaCari.getValue() + "%");
         }
@@ -46,11 +45,11 @@ public class SearchController extends GenericForwardComposer {
         self.detach();
     }
 
-    public void onClick$chkboxNim(Event event) {
-        if (chkboxNip.isChecked()) {
-            txtboxNipCari.setVisible(true);
+    public void onClick$chkboxKode(Event event) {
+        if (chkboxKode.isChecked()) {
+            txtboxKodeCari.setVisible(true);
         } else {
-            txtboxNipCari.setVisible(false);
+            txtboxKodeCari.setVisible(false);
         }
     }
 
@@ -64,6 +63,6 @@ public class SearchController extends GenericForwardComposer {
 
     public void onClick$btnBatal(Event event) {
         txtboxNamaCari.setValue("");
-        txtboxNipCari.setValue("");
+        txtboxKodeCari.setValue("");
     }
 }

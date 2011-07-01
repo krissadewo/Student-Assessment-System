@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.os.sipm.controller.dosen.matakuliah;
+package com.os.sipm.controller.matakuliah.dosen;
 
 import com.os.sipm.helper.MessagesHelper;
-import com.os.sipm.model.dosen.matakuliah.DosenMataKuliah;
-import com.os.sipm.model.dosen.matakuliah.DosenMataKuliahService;
+import com.os.sipm.model.matakuliah.dosen.MataKuliahDosen;
+import com.os.sipm.model.matakuliah.dosen.MataKuliahDosenService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -32,14 +33,15 @@ import org.zkoss.zul.event.PagingEvent;
  */
 public class ListController extends GenericForwardComposer {
 
-    @Autowired
-    private DosenMataKuliahService dosenMataKuliahService;
-    private Logger logger = Logger.getLogger(this.getClass());
     private Listbox listboxData;
-    private List<DosenMataKuliah> dosenMataKuliahs;
-    private DosenMataKuliah selectedDosenMataKuliah;
+    @Autowired
+    private MataKuliahDosenService mataKuliahDosenService;
+    private List<MataKuliahDosen> mataKuliahDosens;
+    private MataKuliahDosen selectedMataKuliahDosen;
     private Paging paging;
-    private final int LIMIT = 2;
+    private final int LIMIT = 15;
+    private Map<Object, Object> params;
+    private Logger logger = Logger.getLogger(this.getClass());
 
     @Override
     public void doAfterCompose(Component win) throws Exception {
@@ -48,29 +50,30 @@ public class ListController extends GenericForwardComposer {
     }
 
     private void init() {
-        loadDataMahasiswa(0, param);
+        params = new HashMap<Object, Object>();
+        loadDataMataKuliahDosen(0);
     }
 
-    private void generateDataMahasiswa(final int cursor, Map<Object, Object> paramValues) {
+    private void generateDataMataKuliahDosen(final int cursor) {
         int no = cursor + 1;
-        paramValues.put("limit", LIMIT);
-        paramValues.put("cursor", cursor);
-        if (paramValues.containsKey("nip")) {
-            paging.setTotalSize(dosenMataKuliahService.countAllDosenMataKuliahByNip(paramValues));
-            dosenMataKuliahs = dosenMataKuliahService.getByNip(paramValues);
-        } else if (paramValues.containsKey("nama")) {
-            paging.setTotalSize(dosenMataKuliahService.countAllDosenMataKuliahByName(paramValues));
-            dosenMataKuliahs = dosenMataKuliahService.getByName(paramValues);
+        params.put("limit", LIMIT);
+        params.put("cursor", cursor);
+        if (params.containsKey("nip")) {
+            paging.setTotalSize(mataKuliahDosenService.countAllMataKuliahDosenByNip(params));
+            mataKuliahDosens = mataKuliahDosenService.getByNip(params);
+        } else if (params.containsKey("nama")) {
+            paging.setTotalSize(mataKuliahDosenService.countAllMataKuliahDosenByName(params));
+            mataKuliahDosens = mataKuliahDosenService.getByName(params);
         } else {
-            paging.setTotalSize(dosenMataKuliahService.countAllDosenMataKuliah());
-            dosenMataKuliahs = dosenMataKuliahService.getAll(paramValues);
+            paging.setTotalSize(mataKuliahDosenService.countAllMataKuliahDosen());
+            mataKuliahDosens = mataKuliahDosenService.getAll(params);
         }
         generateLisboxData(no);
     }
 
-    public void loadDataMahasiswa(int cursor, final Map<Object, Object> paramValues) {
+    public void loadDataMataKuliahDosen(int cursor) {
         // Show Listbox on the first
-        generateDataMahasiswa(cursor, paramValues);
+        generateDataMataKuliahDosen(cursor);
         paging.addEventListener("onPaging", new EventListener() {
 
             @Override
@@ -79,24 +82,25 @@ public class ListController extends GenericForwardComposer {
                 int activePage = pagingEvent.getActivePage();
                 int cursor = activePage * LIMIT;
                 // Redraw current paging
-                generateDataMahasiswa(cursor, paramValues);
+                generateDataMataKuliahDosen(cursor);
             }
         });
     }
 
     public void generateLisboxData(int no) {
         listboxData.getItems().clear();
-        for (final DosenMataKuliah dosenMataKuliah : dosenMataKuliahs) {
+        for (final MataKuliahDosen dosenMataKuliah : mataKuliahDosens) {
             Listitem listitem = new Listitem();
             listitem.appendChild(new Listcell(no + ""));
             listitem.appendChild(new Listcell(dosenMataKuliah.getDosen().getNama()));
             listitem.appendChild(new Listcell(dosenMataKuliah.getMataKuliah().getNama()));
+            listitem.appendChild(new Listcell(dosenMataKuliah.getKelas()));
             listitem.appendChild(new Listcell(String.valueOf(dosenMataKuliah.getMataKuliah().getSks())));
             listitem.addEventListener("onClick", new EventListener() {
 
                 @Override
                 public void onEvent(Event event) throws Exception {
-                    selectedDosenMataKuliah = dosenMataKuliahs.get(listboxData.getSelectedIndex());
+                    selectedMataKuliahDosen = mataKuliahDosens.get(listboxData.getSelectedIndex());
                 }
             });
 
@@ -119,10 +123,11 @@ public class ListController extends GenericForwardComposer {
     }
 
     public void onClick$btnAdd(Event event) throws InterruptedException {
-        Window window = (Window) Executions.createComponents("/views/dosenmatakuliah/add.zul", this.self, null);
+        Window window = (Window) Executions.createComponents("/views/matakuliahdosen/add.zul", this.self, null);
         window.doModal();
-        dosenMataKuliahs = (List<DosenMataKuliah>) window.getAttribute("dosenMataKuliahs");
-        if (dosenMataKuliahs != null) {
+        List<MataKuliahDosen> mataKuliahDosenTemp = (List<MataKuliahDosen>) window.getAttribute("mataKuliahDosens");
+        if (mataKuliahDosenTemp != null) {
+            mataKuliahDosens = mataKuliahDosenTemp;
             this.generateLisboxData(1);
         }
     }
@@ -132,23 +137,24 @@ public class ListController extends GenericForwardComposer {
             MessagesHelper.editEmpty();
         } else {
             // Send param to modal window
-            param.put("selectedMahasiswa", selectedDosenMataKuliah);
-            Window window = (Window) Executions.createComponents("/views/dosenmatakuliah/add.zul", this.self, param);
+            param.put("selectedDosenMataKuliah", selectedMataKuliahDosen);
+            Window window = (Window) Executions.createComponents("/views/matakuliahdosen/add.zul", this.self, param);
             window.doModal();
-            dosenMataKuliahs = (List<DosenMataKuliah>) window.getAttribute("dosenMataKuliahs");
-            if (dosenMataKuliahs != null) {
+            List<MataKuliahDosen> mataKuliahDosenTemp = (List<MataKuliahDosen>) window.getAttribute("mataKuliahDosens");
+            if (mataKuliahDosenTemp != null) {
+                mataKuliahDosens = mataKuliahDosenTemp;
                 this.generateLisboxData(1);
             }
         }
     }
 
     public void onClick$btnSearch(Event event) throws InterruptedException {
-        Window window = (Window) Executions.createComponents("/views/dosenmatakuliah/search.zul", this.self, null);
+        Window window = (Window) Executions.createComponents("/views/matakuliahdosen/search.zul", this.self, null);
         window.doModal();
-        param = (Map) window.getAttribute("params");
-        if (param != null) {
+        params = (Map) window.getAttribute("params");
+        if (params != null) {
             paging.setTotalSize(0);
-            loadDataMahasiswa(0, param);
+            loadDataMataKuliahDosen(0);
         }
     }
 
@@ -161,11 +167,11 @@ public class ListController extends GenericForwardComposer {
                 public void onEvent(Event evt) {
                     switch (((Integer) evt.getData()).intValue()) {
                         case Messagebox.YES:
-                            if (dosenMataKuliahService.delete(selectedDosenMataKuliah) == 1) {
+                            if (mataKuliahDosenService.delete(selectedMataKuliahDosen) == 1) {
                                 MessagesHelper.deleteSuccess();
                                 // Remove data from listbox with unique id from
                                 // selectedIndex
-                                dosenMataKuliahs.remove(listboxData.getSelectedIndex());
+                                mataKuliahDosens.remove(listboxData.getSelectedIndex());
                                 onClick$btnRefresh(event);
                             } else {
                                 MessagesHelper.deleteFailed();
@@ -180,6 +186,6 @@ public class ListController extends GenericForwardComposer {
     }
 
     public void onClick$btnRefresh(Event event) {
-        loadDataMahasiswa(paging.getActivePage() * LIMIT, param);
+        loadDataMataKuliahDosen(paging.getActivePage() * LIMIT);
     }
 }
